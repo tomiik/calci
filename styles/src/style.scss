@@ -1,6 +1,21 @@
 $key_height: 16vmin;
+
+$result_bgcolor: #fff;
+$prev_bgcolor: #eee;
+$num_key_bgcolor: #444;
+$num_key_color: #fff;
+$ope_key_bgcolor: #666;
+$ope_key_color: #fff;
+
+$result_font_weight: 100;
+$num_key_font_weight: 300;
+$ope_key_font_weight: 300;
+
+
 body {
   height: 100vh;
+  font-family: 'Roboto', sans-serif;
+
 }
 
 #calculator {
@@ -11,27 +26,47 @@ body {
   margin: 0 auto;
 
   #result {
-    background-color: red;
+    background-color: $result_bgcolor;
     height: 1.3*$key_height;
+    text-align: right;
+    font-size: 14vmin;
+    line-height: 20.8vmin;
+    font-weight: $result_font_weight
   }
 
   #preview {
-    background-color:  green;
+    background-color:  $prev_bgcolor;
     height: 0.7*$key_height;
+    font-size: 14vmin;
+    text-align: right;
+    font-size: 6vmin;
+    line-height: 11.2vmin;
+    font-weight: 100;
+    padding-right: 2vmin;
   }
 
   #keys {
     .key {
-      background-color: blue;
+      background-color: $num_key_bgcolor;
+      color: $num_key_color;
       height: $key_height;
+      font-size: 8vmin;
+      text-align: center;
+      font-weight: $num_key_font_weight;
+      line-height: $key_height;
     }
   }
 
   #operators {
     .operator {
-      background-color: orange;
+      background-color: $ope_key_bgcolor;
+      color: $ope_key_color;
       height: 0.8 * $key_height;
       margin: 0 -15px;
+      font-size: 6vmin;
+      font-weight: $ope_key_font_weight;
+      text-align:center;
+      line-height:0.8*$key_height;
     }
   }
 }
