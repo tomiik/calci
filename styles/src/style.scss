@@ -8,8 +8,8 @@ $ope_key_bgcolor: #666;
 $ope_key_color: #fff;
 
 $result_font_weight: 100;
-$num_key_font_weight: 300;
-$ope_key_font_weight: 300;
+$num_key_font_weight: 200;
+$ope_key_font_weight: 200;
 
 
 body {
@@ -54,6 +54,17 @@ body {
       text-align: center;
       font-weight: $num_key_font_weight;
       line-height: $key_height;
+      
+
+      &:hover{
+        background-color: darken($num_key_bgcolor,5%);
+      }
+
+      &:active{
+        background-color: darken($num_key_bgcolor,10%);
+        font-weight: 300;
+
+      }
     }
   }
 
