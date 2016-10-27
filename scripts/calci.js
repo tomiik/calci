@@ -5,7 +5,7 @@ var Calci = {
       if(this.dataset.keyType == "digit"){
         Calci.handleInput(this.dataset.digit);
       }else if (this.dataset.keyType == "operator"){
-        Calci.handleInput(this.dataset.operator);
+        Calci.handleOperator(this.dataset.operator);
       }else if (this.dataset.keyType == "dot"){
         Calci.handleDot();
       }else if (this.dataset.keyType == "delete"){
@@ -19,9 +19,14 @@ var Calci = {
       Calci.handleDeleteAll();
     });
 
-    ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '-', '*', '/'].forEach(function(digit){
+    ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].forEach(function(digit){
       $(document).bind('keyup',digit,function(){
         Calci.handleInput(digit);
+      });
+    });
+    ['+', '-', '*', '/'].forEach(function(operator){
+      $(document).bind('keyup',operator,function(){
+        Calci.handleOperator(operator);
       });
     });
 
@@ -34,7 +39,7 @@ var Calci = {
     });
 
     $(document).bind('keyup', 'shift+=', function(){
-      Calci.handleInput('+');
+      Calci.handleOperator('+');
     });
     ['=', 'return'].forEach(function(key){
       $(document).bind('keyup', key, function(){
@@ -46,6 +51,25 @@ var Calci = {
   },
   handleInput: function(input){
     $("#preview").html($("#preview").html() + input);
+  },
+  handleOperator: function(operator){
+    if($("#preview").html().length == 0){
+      if(operator == '-'){
+        Calci.handleInput('-');
+      }
+    }else{
+      lastChar = Calci.getLastChar();
+      console.log(lastChar);
+      if(['+', '-', '*', '/'].indexOf(lastChar) != -1){
+        Calci.handleDelete();
+      }
+      lastChar = Calci.getLastChar();
+      if(lastChar.length != ""){
+        Calci.handleInput(operator);
+      }else{
+        Calci.handleInput('-');
+      }
+    }
   },
   handleDot: function(){
     lastNumber = Calci.getLastNumber();
@@ -82,6 +106,14 @@ var Calci = {
       regexp = /[0-9.]*$/
       matches = str.match(regexp);
       return matches[0];
+    }
+  },
+  getLastChar: function() {
+    str = $("#preview").html();
+    if(str.length == 0){
+      return str;
+    }else{
+      return str[str.length-1];
     }
   }
 }
