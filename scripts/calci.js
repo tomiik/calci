@@ -6,6 +6,8 @@ var Calci = {
         Calci.handleInput(this.dataset.digit);
       }else if (this.dataset.keyType == "operator"){
         Calci.handleInput(this.dataset.operator);
+      }else if (this.dataset.keyType == "dot"){
+        Calci.handleDot();
       }else if (this.dataset.keyType == "delete"){
         Calci.handleDelete();
       }else if (this.dataset.keyType == "equals"){
@@ -21,6 +23,10 @@ var Calci = {
       $(document).bind('keyup',digit,function(){
         Calci.handleInput(digit);
       });
+    });
+
+    $(document).bind('keyup', '.', function(){
+      Calci.handleDot();
     });
 
     $(document).bind('keyup', 'backspace', function(){
@@ -41,6 +47,15 @@ var Calci = {
   handleInput: function(input){
     $("#preview").html($("#preview").html() + input);
   },
+  handleDot: function(){
+    lastNumber = Calci.getLastNumber();
+    if(lastNumber.indexOf('.') == -1){
+      if(lastNumber.length == 0){
+        Calci.handleInput('0');
+      }
+      Calci.handleInput('.');
+    }
+  },
   handleDelete: function(){
     $("#preview").html($("#preview").html().slice(0,-1));
     if($("#preview").html().length == 0){
@@ -56,6 +71,18 @@ var Calci = {
   },
   clearResult: function(){
     $("#result").html('');
+  },
+  getLastNumber: function(){
+    str = $("#preview").html();
+    regexp = /[+\-*/]?[0-9.]*$/
+    matches = str.match(regexp);
+    if(matches == null){
+      return str;
+    }else {
+      regexp = /[0-9.]*$/
+      matches = str.match(regexp);
+      return matches[0];
+    }
   }
 }
 
